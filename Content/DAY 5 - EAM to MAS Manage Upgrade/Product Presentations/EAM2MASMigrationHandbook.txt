@@ -1,0 +1,71 @@
+EAM to MAS Manage Migration Solution Accelerator
+================================================
+
+Finalize a MAS deployment option
+--------------------------------
+- MAS On-Prem
+- MAS on Hyperscalers (Azure/AWS)
+- MAS SaaS (Following steps won't apply)
+- MAS Dedicated (Following steps won't apply)
+
+Get an OCP cluster
+------------------
+- Use the product infra sizing sheet to determine the required infra size.
+	- If not using DB2, the DB sizing needs to be done seperately.
+- For Azure/AWS: Option available to use BYOL approach to setup OCP + MAS
+- For other cloud vendors or on-prem setup:
+	- Provision your VMs for master/worker nodes
+	- Install OCP on the provisioned VMs
+- Provison and add required storage classes to the cluster
+- <Security/VPN steps to be added>
+
+Pre-migration checks/steps in EAM
+---------------------------------
+- Ensure EAM version is upgraded to 7.6.1.2
+- Ensure all OOB Object structures have no custom changes
+- Take this opportunity to plan and remediate all JAVA customizations, and convert them into OOB configurations or automation scripts as much as possible.
+- Take a backup of all custom XML files
+- Take a backup of all custom RPTDESIGN files
+- Take a backup of all custom java and class files
+- Take a backup of all doclinks files and folders
+- Anywhere and Work centers are not officially supported by IBM in MAS 8.10+
+
+DB Migration Steps
+------------------
+- If not using CP4D, plan for DB sizing
+- Provision the DB server, and install the required DB technology
+	- Or provision the required DB service from the cloud of your choice
+- Gather all necessary user credentials for the database
+- Ensure all pre-migrations steps are covered
+- Copy the PROD DB data from source server to the destination server/cluster (cloud/On-Prem)
+	- If underlying DB change is planned, use Schema Conversion Tool to migrate DB
+	- If using DB2 inside CP4D, then CP4D needs to be installed first (check MAS env setup steps)
+- DB connectivity with MAS cluster
+- Setup HADR for DB
+
+Setup CP4D
+----------
+- Only applicable for MAS environments where MAS Monitor is planned or if Manage DB is planned to exist in CP4D
+- Migrate Manage DB from source DB to CP4D
+	- Use schema conversion tool if source DB is NOT DB2.
+
+Setup MAS environment
+---------------------
+- Install MAS on Openshift
+	- If the cluster is on Azure/AWS, option available to use BYOL templates to install MAS
+	- Otherwise, use Ansible automation to install MAS Core and Manage
+		- Provide the DB details while setting up Manage installation
+		- Add required Industry solutions and add-ons as required post Manage installation.
+	- Or, Install MAS Core using Ansible automation and proceed with Manage installation manually.
+
+Post Migration steps in MAS
+---------------------------
+- Ensure all JVMs are configured and deployed in MAS
+- Create a data archive of all Java Customizations using the appropriate folder path and import that in MAS Core using some cloud storage service
+- Migrate all Integration endpoints, deploy all custom certificates, enable any VPN tunnel if required.
+- Configure User integration for LDAP/SAML/SSO
+- Ensure all groups have appropriate Security access, considering new sigoptions will be added in Manage
+- Ensure all custom Manage configurations are in place, make any required changes
+- Deploy the doclinks files and folders in the appropriate location
+- Make any final changes as required
+- Testing and debugging issues
