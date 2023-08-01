@@ -1,0 +1,40 @@
+[
+    {
+        "id": "f9f01db8235e95e6",
+        "type": "http request",
+        "z": "dc7a565de9a7c6a8",
+        "name": "Data Load",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://masdev.messaging.iot.demo.masgsi89-240f75f72cdf82f997ffe11d34c5adcb-0000.us-south.containers.appdomain.cloud/api/v0002/application/types/Devicetype_Lrng/devices/Lrng_Device1/events/Voltage",
+        "tls": "838fb4709f73cf5e",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "credentials": {},
+        "x": 940,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "838fb4709f73cf5e",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "ca.pem",
+        "servername": "masdev.messaging.iot.demo.masgsi89-240f75f72cdf82f997ffe11d34c5adcb-0000.us-south.containers.appdomain.cloud",
+        "verifyservercert": false,
+        "alpnprotocol": "",
+        "credentials": {}
+    }
+]
