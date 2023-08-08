@@ -1,0 +1,234 @@
+[
+    {
+        "id": "bb45da8d8d22cd5a",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "732d251e02413bc5",
+        "type": "random",
+        "z": "bb45da8d8d22cd5a",
+        "name": "InputTemp",
+        "low": "20",
+        "high": "30",
+        "inte": "false",
+        "property": "payload",
+        "x": 290,
+        "y": 660,
+        "wires": [
+            [
+                "065b2c8f14c5c4fe"
+            ]
+        ]
+    },
+    {
+        "id": "3b9e3a1e86d5db94",
+        "type": "inject",
+        "z": "bb45da8d8d22cd5a",
+        "name": "Data Load Interval",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 540,
+        "wires": [
+            [
+                "732d251e02413bc5"
+            ]
+        ]
+    },
+    {
+        "id": "065b2c8f14c5c4fe",
+        "type": "function",
+        "z": "bb45da8d8d22cd5a",
+        "name": "Set Input Temp",
+        "func": "flow.set('InputTemp',msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 780,
+        "wires": [
+            [
+                "71a1cd22d5a96397"
+            ]
+        ]
+    },
+    {
+        "id": "4501d5f4acaffec9",
+        "type": "random",
+        "z": "bb45da8d8d22cd5a",
+        "name": "InputVoltage",
+        "low": "800",
+        "high": "950",
+        "inte": "false",
+        "property": "payload",
+        "x": 850,
+        "y": 880,
+        "wires": [
+            [
+                "387229be44008ddc"
+            ]
+        ]
+    },
+    {
+        "id": "387229be44008ddc",
+        "type": "function",
+        "z": "bb45da8d8d22cd5a",
+        "name": "Set Input Voltage",
+        "func": "flow.set('InputVoltage',msg.payload);\nmsg.payload = {'InputVoltage':msg.payload};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 980,
+        "wires": [
+            [
+                "cbf632c922ddb60d"
+            ]
+        ]
+    },
+    {
+        "id": "cbf632c922ddb60d",
+        "type": "function",
+        "z": "bb45da8d8d22cd5a",
+        "name": "Prepare Payload",
+        "func": "msg.payload = { \"InputTemp\": flow.get(\"InputTemp\"), \"Temp_X\": flow.get(\"Temp_X\"), \"InputVoltage\": flow.get(\"InputVoltage\") };\nmsg.headers = {\"Content-Type\" : \"application/json\"};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 980,
+        "wires": [
+            [
+                "1c2385e38cd1f516"
+            ]
+        ]
+    },
+    {
+        "id": "a59b3ee55968d7b1",
+        "type": "debug",
+        "z": "bb45da8d8d22cd5a",
+        "name": "Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1610,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "1c2385e38cd1f516",
+        "type": "json",
+        "z": "bb45da8d8d22cd5a",
+        "name": "JSON format ",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 1410,
+        "y": 980,
+        "wires": [
+            [
+                "a59b3ee55968d7b1",
+                "da2ddc2dde26d808"
+            ]
+        ]
+    },
+    {
+        "id": "da2ddc2dde26d808",
+        "type": "http request",
+        "z": "bb45da8d8d22cd5a",
+        "name": "Data Load",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "838fb4709f73cf5e",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "x": 1610,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "71a1cd22d5a96397",
+        "type": "random",
+        "z": "bb45da8d8d22cd5a",
+        "name": "Temp_X",
+        "low": "20",
+        "high": "30",
+        "inte": "false",
+        "property": "payload",
+        "x": 560,
+        "y": 680,
+        "wires": [
+            [
+                "6dc6b9564f87cc0b"
+            ]
+        ]
+    },
+    {
+        "id": "6dc6b9564f87cc0b",
+        "type": "function",
+        "z": "bb45da8d8d22cd5a",
+        "name": "Set Temp_X",
+        "func": "flow.set('Temp_X',msg.payload);\nmsg.payload = {'Temp_X':msg.payload};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 820,
+        "wires": [
+            [
+                "4501d5f4acaffec9"
+            ]
+        ]
+    },
+    {
+        "id": "838fb4709f73cf5e",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": true,
+        "alpnprotocol": ""
+    }
+]
