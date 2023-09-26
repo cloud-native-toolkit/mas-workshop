@@ -1,0 +1,19 @@
+[
+    {
+        "id": "732d251e02413bc5",
+        "type": "random",
+        "z": "bb45da8d8d22cd5a",
+        "name": "InputTemp",
+        "low": "60",
+        "high": "10",
+        "inte": "false",
+        "property": "payload",
+        "x": 290,
+        "y": 660,
+        "wires": [
+            [
+                "065b2c8f14c5c4fe"
+            ]
+        ]
+    }
+]
