@@ -5,8 +5,8 @@
     "APM_API_BASEURL": "Application Administration -> Integration -> End Points--> Searh for predict -> click search result PREDICTAPI -> URL (e.g https://predict-api.mas-pmidev1-predict.svc, note you just need first part of the url). From MAS 8.4 we will support external url as well. The external url is constructed with this pattern during MAS-Predict installation - https://{workspaceId}.predict.{DOMAIN},  e.g. https://main.predict.test.ivt03.suite.maximo.com. It is defined at installation time. Please get it from your admin"
   },
   "APM_ID": "masdev",
-  "APM_API_BASEURL": "https://aulabs-predict-api.mas-aulabs-predict.svc",
-  "APM_API_KEY": "gkt1jmtpcemk0tpd11dvvciac4rr3t1hrf3hacum",
+  "APM_API_BASEURL": "https://mas810-predict-api.mas-mas810-predict.svc",
+  "APM_API_KEY": "mv2ja3bcf8pkn2i7rerc9njam3gdkf10cjpbmt3p",
   "USER_PROVIDED_HEALTH_URL": "",
   "USER_PROVIDED_DB_CONNECTION_STRING": "",
   "USER_PROVIDED_URL": ""
