@@ -1,0 +1,281 @@
+[
+    {
+        "id": "1ff0aa1f892216fc",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "418cb479338e3244",
+        "type": "random",
+        "z": "1ff0aa1f892216fc",
+        "name": "InputTemp",
+        "low": "10",
+        "high": "40",
+        "inte": "false",
+        "property": "payload",
+        "x": 370,
+        "y": 440,
+        "wires": [
+            [
+                "b9d6a676de6a333d"
+            ]
+        ]
+    },
+    {
+        "id": "a48e6803e2064448",
+        "type": "inject",
+        "z": "1ff0aa1f892216fc",
+        "name": "Data Load Interval",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 440,
+        "wires": [
+            [
+                "418cb479338e3244"
+            ]
+        ]
+    },
+    {
+        "id": "b9d6a676de6a333d",
+        "type": "function",
+        "z": "1ff0aa1f892216fc",
+        "name": "Set Input Temp",
+        "func": "flow.set('InputTemp',msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 440,
+        "wires": [
+            [
+                "12e69350dd4566bc"
+            ]
+        ]
+    },
+    {
+        "id": "1cf93d83ab0ee618",
+        "type": "random",
+        "z": "1ff0aa1f892216fc",
+        "name": "InputVoltage",
+        "low": "800",
+        "high": "950",
+        "inte": "false",
+        "property": "payload",
+        "x": 370,
+        "y": 600,
+        "wires": [
+            [
+                "389d8bcdb21e530d"
+            ]
+        ]
+    },
+    {
+        "id": "389d8bcdb21e530d",
+        "type": "function",
+        "z": "1ff0aa1f892216fc",
+        "name": "Set Input Voltage",
+        "func": "flow.set('InputVoltage',msg.payload);\nmsg.payload = {'InputVoltage':msg.payload};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 600,
+        "wires": [
+            [
+                "e8c60cef8135e28e"
+            ]
+        ]
+    },
+    {
+        "id": "e8c60cef8135e28e",
+        "type": "function",
+        "z": "1ff0aa1f892216fc",
+        "name": "Prepare Payload",
+        "func": "msg.payload = { \"InputTemp\": flow.get(\"InputTemp\"), \"Temp_X\": flow.get(\"Temp_X\"), \"InputVoltage\": flow.get(\"InputVoltage\") };\nmsg.headers = {\"Content-Type\" : \"application/json\"};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 600,
+        "wires": [
+            [
+                "52750b6bc34f5372"
+            ]
+        ]
+    },
+    {
+        "id": "b315d4afe17cab67",
+        "type": "debug",
+        "z": "1ff0aa1f892216fc",
+        "name": "Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "52750b6bc34f5372",
+        "type": "json",
+        "z": "1ff0aa1f892216fc",
+        "name": "JSON format ",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 1070,
+        "y": 600,
+        "wires": [
+            [
+                "b315d4afe17cab67",
+                "a5322b0e1df9de19",
+                "761542c25b1a62e8",
+                "3586ad8635933cd8"
+            ]
+        ]
+    },
+    {
+        "id": "a5322b0e1df9de19",
+        "type": "http request",
+        "z": "1ff0aa1f892216fc",
+        "name": "Data Load",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://masdev.messaging.iot.masworkshop.mas-ap-training-e7aa5841ae79e6d90a7e4cfee229cd67-0000.jp-tok.containers.appdomain.cloud/api/v0002/application/types/emdevicetype_lrng/devices/lrng_device1/events/event1",
+        "tls": "838fb4709f73cf5e",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "x": 1290,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "12e69350dd4566bc",
+        "type": "random",
+        "z": "1ff0aa1f892216fc",
+        "name": "Temp_X",
+        "low": "20",
+        "high": "30",
+        "inte": "false",
+        "property": "payload",
+        "x": 380,
+        "y": 520,
+        "wires": [
+            [
+                "de10899894e9c14b"
+            ]
+        ]
+    },
+    {
+        "id": "de10899894e9c14b",
+        "type": "function",
+        "z": "1ff0aa1f892216fc",
+        "name": "Set Temp_X",
+        "func": "flow.set('Temp_X',msg.payload);\nmsg.payload = {'Temp_X':msg.payload};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 520,
+        "wires": [
+            [
+                "1cf93d83ab0ee618"
+            ]
+        ]
+    },
+    {
+        "id": "761542c25b1a62e8",
+        "type": "http request",
+        "z": "1ff0aa1f892216fc",
+        "name": "Data Load",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://masdev.messaging.iot.masworkshop.mas-ap-training-e7aa5841ae79e6d90a7e4cfee229cd67-0000.jp-tok.containers.appdomain.cloud/api/v0002/application/types/Devicetype_EJ/devices/Lrng_Device1/events/1",
+        "tls": "838fb4709f73cf5e",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "x": 1290,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3586ad8635933cd8",
+        "type": "http request",
+        "z": "1ff0aa1f892216fc",
+        "name": "Data Load",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://masdev.messaging.iot.masworkshop.mas-ap-training-e7aa5841ae79e6d90a7e4cfee229cd67-0000.jp-tok.containers.appdomain.cloud/api/v0002/application/types/Devicetype_Lee/devices/jwlee_Device/events/1",
+        "tls": "838fb4709f73cf5e",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "x": 1290,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "838fb4709f73cf5e",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "https://masdev.messaging.iot.masworkshop.mas-ap-training-e7aa5841ae79e6d90a7e4cfee229cd67-0000.jp-tok.containers.appdomain.cloud",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
